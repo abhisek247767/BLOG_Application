@@ -1,25 +1,32 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/auth');
+const discussionRoutes = require('./routes/discussions');
+const postRoutes = require('./routes/posts'); 
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://abhisek:abhisek@cluster0.byyykdt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+// Middleware
+app.use(express.json());
 
 // Routes
-const userRoutes = require('./routes/users');
-const discussionRoutes = require('./routes/discussions');
-
 app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 app.use('/discussions', discussionRoutes);
+app.use('/posts', postRoutes);
 
-// Static folder for uploads
-app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const MONGODB_URI = process.env.MONGODB_URI;
+
+// Connect to MongoDB
+mongoose.connect(MONGODB_URI).then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}).catch(err => {
+    console.error('Failed to connect to MongoDB', err);
 });
