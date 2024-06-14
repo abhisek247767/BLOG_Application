@@ -1,42 +1,49 @@
 # Discussion App
 
-A microservice-based application that allows users to sign up, log in, create posts with text and images, follow/unfollow other users, comment on posts, and receive notifications. The architecture includes separate services for user management, post handling, commenting, notifications, and analytics, ensuring scalability and maintainability. Each service is developed independently, with Node.js and MongoDB as the primary technologies.
+A Node.js application for managing users and discussions, providing functionalities for user management, posting discussions with text or images, commenting, liking posts and comments, following users, and searching discussions by hashtags and text.
 
-# Discussion App API Endpoints
+## Functionalities
 
-## User Service
+1. **User Authentication**
+   - **POST /auth/signup**: Create a new user account.
+   - **POST /auth/login**: Log in an existing user.
 
-- **POST /auth/signup**: Create a new user account.
-- **POST /auth/login**: Log in an existing user.
-- **GET /users**: Get a list of all users.
-- **GET /users/:id**: Get details of a specific user.
-- **PUT /users/:id**: Update user details.
-- **DELETE /users/:id**: Delete a user account.
-- **POST /users/follow/:id**: Follow another user.
-- **POST /users/unfollow/:id**: Unfollow another user.
+2. **User Management**
+   - **GET /users**: Get a list of all users.
+   - **GET /users/search?name=keyword**: Search users based on name.
+   - **PUT /users/:id**: Update user details.
+   - **DELETE /users/:id**: Delete a user account.
 
-## Post Service
+3. **User Relationships**
+   - **POST /users/follow/:id**: Follow another user.
+   - **POST /users/unfollow/:id**: Unfollow another user.
 
-- **POST /posts**: Create a new post.
-- **GET /posts**: Get a list of all posts.
-- **GET /posts/:id**: Get details of a specific post.
-- **PUT /posts/:id**: Update a post.
-- **DELETE /posts/:id**: Delete a post.
-- **POST /posts/:postId/like**: Like a post.
-- **POST /posts/:postId/unlike**: Unlike a post.
+4. **Discussion Management**
+   - **POST /discussions**: Create a new discussion.
+   - **GET /discussions**: Get a list of all discussions.
+   - **GET /discussions/:id**: Get details of a specific discussion.
+   - **PUT /discussions/:id**: Update a discussion.
+   - **DELETE /discussions/:id**: Delete a discussion.
 
-## Comment Service
+5. **Post Interaction**
+   - **POST /discussions/:id/like**: Like a discussion.
+   - **POST /discussions/:id/unlike**: Unlike a discussion.
+   - **POST /discussions/:id/comment**: Comment on a discussion.
+   - **PUT /comments/:id**: Update a comment.
+   - **DELETE /comments/:id**: Delete a comment.
 
-- **POST /posts/:postId/comment**: Create a new comment on a post.
-- **PUT /comments/:id**: Update a comment.
+6. **View Count**
+   - **GET /discussions/:id/views**: Get the view count of a discussion.
 
-## Notification Service
+7. **Hashtag Search**
+   - **GET /discussions/tags/:tag**: Get discussions based on a specific hashtag.
 
-- **GET /notifications**: Get all notifications.
+## Environment Variables
 
-## Analytics Service
+Create a `.env` file in the root directory with the following variables:
 
-- **GET /analytics/posts**: Get analytics data for posts.
+
+
 
 ## Setup and Installation
 
@@ -51,4 +58,14 @@ A microservice-based application that allows users to sign up, log in, create po
    ```bash
    git clone https://github.com/your-username/discussion-app.git
    cd discussion-app
+ ```
 
+### Install dependencies:
+```bash
+npm install
+ ```
+### Start the application:
+
+```bash
+npm start
+ ```
